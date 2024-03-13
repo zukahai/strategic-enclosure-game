@@ -1,41 +1,33 @@
-game_W = 0, game_H = 0;
-sizeChess = sizeBlock = 0;
-Xalignment = Yalignment = 0;
-
-let hexagon_image = new Image();
-hexagon_image.src = "assets/images/hexagon.png";
-
-blockArrived = []
-
-class game {
+class Game {
     constructor() {
         this.canvas = null;
         this.context = null;
         this.init();
+        this.listenMouse();
     }
 
     init() {
+        this.gameWidth = 0, this.gameHeight = 0;
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
         document.body.appendChild(this.canvas);
-
+        this.render();
+        this.board = new Board(this);
         this.loop();
-        this.listenMouse();
     }
+
 
     listenMouse() {
         document.addEventListener("mousedown", evt => {
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
-            console.log("click" , x, y);
+            console.log("click", x, y);
         })
 
         document.addEventListener("mousemove", evt => {
-            if (win)
-                return;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
-            
+
         })
 
         document.addEventListener("mouseup", evt => {
@@ -61,17 +53,18 @@ class game {
         if (this.canvas.width != document.documentElement.clientWidth || this.canvas.height != document.documentElement.clientHeight) {
             this.canvas.width = document.documentElement.clientWidth;
             this.canvas.height = document.documentElement.clientHeight;
-            game_W = this.canvas.width;
-            game_H = this.canvas.height;
+            this.gameWidth = this.canvas.width;
+            this.gameHeight = this.canvas.height;
 
         }
     }
 
     draw() {
         this.clearScreen();
+        this.board.draw();
     }
 
-   
+
     drawText() {
         this.context.font = this.getSize() / 1.5 + 'px Arial Black';
         this.context.fillStyle = "#FF00CC";
@@ -79,15 +72,15 @@ class game {
         if (step < 2)
             s = " step"
         this.context.textAlign = "center";
-        this.context.fillText(step + s + " left to get to the red box", game_W / 2, Yalignment - sizeBlock / 2);
-        this.context.fillText("Level " + level, game_W / 2, Yalignment + sizeBlock / 2 + sizeChess);
+        this.context.fillText(step + s + " left to get to the red box", this.gameWidth / 2, Yalignment - sizeBlock / 2);
+        this.context.fillText("Level " + level, this.gameWidth / 2, Yalignment + sizeBlock / 2 + sizeChess);
     }
 
     clearScreen() {
-        this.context.clearRect(0, 0, game_W, game_H);
+        this.context.clearRect(0, 0, this.gameWidth, this.gameHeight);
         this.context.fillStyle = '#000000';
-        this.context.fillRect(0, 0, game_W, game_H);
+        this.context.fillRect(0, 0, this.gameWidth, this.gameHeight);
     }
 }
 
-var g = new game();
+var g = new Game();
