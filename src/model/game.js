@@ -42,8 +42,9 @@ class Game {
         if (row > 0 && column > 0) {
             if (this.board.setItem(row, column, 1)) {
                 console.log("Set ", row, column);
-                this.board.moveUfo(row + 1, column + 1);
+                // this.board.moveUfo(row + 1, column + 1);
                 console.table(this.board.data);
+                new AlogorithmDFS(this.board.data, this.board.postionUfo);
             }
         }
     }
