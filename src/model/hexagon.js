@@ -1,14 +1,6 @@
-class Hexagon {
-    constructor(game, witdh, height, xAlignment, yAlignment) {
-        this.witdh = witdh;
-        this.height = height;
-        this.xAlignment = xAlignment;
-        this.yAlignment = yAlignment;
-        this.game = game;
-    }
-
-    draw() {
-        this.game.context.drawImage(this.getImage(), this.xAlignment, this.yAlignment, this.witdh, this.height);
+class Hexagon extends Item {
+    constructor(game, width, height, xAlignment, yAlignment) {
+        super(game, width, height, xAlignment, yAlignment);
     }
 
     getImage() {
@@ -16,5 +8,4 @@ class Hexagon {
         hexagonImage.src = "assets/images/hexagon.png";
         return hexagonImage;
     }
-
 }
