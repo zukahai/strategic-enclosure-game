@@ -2,8 +2,17 @@ class Board {
     constructor(game) {
         this.game = game;
         this.numberBlock = 11;
-        this.initBoardHexagon();
+        this.levels = new Level().levels;
+        this.level = 0;
+        this.initVariable();
         this.initData();
+    }
+
+    initVariable() {
+        this.data = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
+        this.hexagons = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
+        this.items = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
+        this.initBoardHexagon();
     }
 
     initBoardHexagon() {
@@ -35,6 +44,31 @@ class Board {
         return { width, height, xAlignmentHexagon, yAlignmentHexagon };
     }
 
+    setLevel(level) {
+        this.initVariable();
+        this.data = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
+
+        this.dataFile = this.levels[level];
+        for (let i = 1; i <= this.dataFile.length; i++)
+            for (let j = 1; j <= this.dataFile.length; j++)
+                this.data[i][j] = this.dataFile[i - 1][j - 1];
+        this.data[0] = new Array(this.numberBlock).fill(5);
+        this.data[this.numberBlock - 1] = new Array(this.numberBlock).fill(5);
+        this.data = this.data.map((row) => {
+            row[0] = row[this.numberBlock - 1] = 5;
+            return row;
+        })
+
+        this.setItemBoard();
+        for (let i = 0; i < this.data.length; i++)
+            for (let j = 0; j < this.data.length; j++)
+                if (this.data[i][j] == 2) {
+                    this.postionUfo = {row: i, column: j};
+                    break;
+                }
+        this.setItemBoard();
+    }
+
     getColumnAndRowByPositon(x, y) {
         let row = -1;
         let column = -1;
@@ -55,22 +89,7 @@ class Board {
     }
 
     initData() {
-        this.data = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
-        this.data[0] = new Array(this.numberBlock).fill(5);
-        this.data[this.numberBlock - 1] = new Array(this.numberBlock).fill(5);
-        this.data = this.data.map((row) => {
-            row[0] = row[this.numberBlock - 1] = 5;
-            return row;
-        })
-        this.items = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
-
-        this.data[1][2] = 1;
-        this.data[2][7] = 1;
-        this.data[3][7] = 1;
-        this.data[4][7] = 1;
-        this.data[4][5] = 2;
-
-        this.setItemBoard();
+        this.setLevel(this.level);
         console.log("Done init");
     }
 
@@ -128,7 +147,8 @@ class Board {
     moveUfo(newRow, newColumn) {
         if (newRow == -1){
             alert("Bạn thắng!");
-            location.reload();
+            this.setLevel(++this.level)
+            return;
         }
 
         // Lấy hàng, cột cũ của ufo
@@ -146,7 +166,7 @@ class Board {
         //===> Chỉ cần thay đổi ở mảng data, mảng item sẽ dùng hàm thay đổi sau
         if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 ||  newColumn == this.data.length - 1) {
             alert("UFO đã trốn thoát");
-            location.reload();
+            this.setLevel(this.level);
         }
     }
 

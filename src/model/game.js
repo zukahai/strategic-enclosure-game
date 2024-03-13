@@ -14,7 +14,8 @@ class Game {
         this.fps = new FPS();
         this.render();
         this.board = new Board(this);
-        this.start();
+        // this.start();
+        this.loop();
     }
 
 
@@ -53,11 +54,20 @@ class Game {
     }
 
 
-    loop(timestamp) {
-        this.fps.calculateFPS(timestamp);
+    // loop(timestamp) {
+    //     this.fps.calculateFPS(timestamp);
+    //     this.update();
+    //     this.draw();
+    //     requestAnimationFrame((timestamp) => this.loop(timestamp));
+    // }
+
+    loop() {
+        // this.fps.calculateFPS(timestamp);
         this.update();
         this.draw();
-        requestAnimationFrame((timestamp) => this.loop(timestamp));
+        setTimeout(() => {
+            this.loop();
+        }, 30);
     }
 
     start() {
@@ -74,14 +84,14 @@ class Game {
             this.canvas.height = document.documentElement.clientHeight;
             this.gameWidth = this.canvas.width;
             this.gameHeight = this.canvas.height;
-
         }
     }
 
     draw() {
         this.clearScreen();
         this.board.draw();
-        this.drawFPS();
+        this.drawLevel();
+        // this.drawFPS();
     }
 
     drawFPS() {
@@ -91,6 +101,12 @@ class Game {
         if (fps < 30)
             this.context.fillStyle = "red";
         this.context.fillText("FPS: " + fps, this.gameWidth * 0.9 - this.board.sizeHexagon, this.board.sizeHexagon);
+    }
+
+    drawLevel() {
+        this.context.font = (this.board.sizeHexagon / 1.5) + 'px MyCustomFont';
+        this.context.fillStyle = "white";
+        this.context.fillText("Level: " + (this.board.level + 1), this.board.sizeHexagon , this.board.sizeHexagon);
     }
 
 
