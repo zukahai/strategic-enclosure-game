@@ -1,6 +1,6 @@
 class Item {
-    constructor(game, witdh, height, xAlignment, yAlignment) {
-        this.witdh = witdh;
+    constructor(game, width, height, xAlignment, yAlignment) {
+        this.width = width;
         this.height = height;
         this.xAlignment = xAlignment;
         this.yAlignment = yAlignment;
@@ -8,7 +8,7 @@ class Item {
     }
 
     draw() {
-        this.game.context.drawImage(this.getImage(), this.xAlignment, this.yAlignment, this.witdh, this.height);
+        this.game.context.drawImage(this.getImage(), this.xAlignment, this.yAlignment, this.width, this.height);
     }
 
     getImage() {

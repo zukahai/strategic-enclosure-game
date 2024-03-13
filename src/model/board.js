@@ -13,7 +13,7 @@ class Board {
         this.yAlignment = (this.game.gameHeight - 0.75 * this.sizeHeightBlock * this.numberBlock) / 2;
 
         this.hexagons = [];
-        this.items = [];
+        // this.items = [];
 
         for (let i = 1; i <= this.numberBlock - 2; i++) {
             this.hexagons[i] = [];
@@ -35,6 +35,25 @@ class Board {
         return { width, height, xAlignmentHexagon, yAlignmentHexagon };
     }
 
+    getColumnAndRowByPositon(x, y) {
+        let row = -1;
+        let column = -1;
+        let minDistance = 1000 * this.sizeHexagon;
+        for (let i = 1; i <= this.numberBlock - 2; i++) {
+            for (let j = 1; j <= this.numberBlock - 2; j++) {
+                let xCenter = this.hexagons[i][j].xAlignment + this.hexagons[i][j].width / 2;
+                let yCenter = this.hexagons[i][j].yAlignment + this.hexagons[i][j].height / 2;
+                let distance = Math.sqrt(Math.pow(x - xCenter, 2) + Math.pow(y - yCenter, 2));
+                if (distance < minDistance && distance <= 2 * this.sizeHexagon) {
+                    minDistance = distance;
+                    row = i;
+                    column = j;
+                }
+            }
+        }
+        return { row, column }
+    }
+
     initData() {
         this.data = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
         this.items = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
@@ -46,6 +65,7 @@ class Board {
         this.data[4][5] = 2;
 
         this.setItemBoard();
+        console.log("Done init");
     }
 
     setItemBoard() {
@@ -84,6 +104,15 @@ class Board {
         let sizeHexagonByWidth = gameWidth / (2 * this.numberBlock);
         let sizeHexagonByHeight = gameHeight / (2 * 0.75 * this.numberBlock);
         return Math.min(sizeHexagonByHeight, sizeHexagonByWidth);
+    }
+
+    setItem(row, column, value) {
+        if (this.data[row][column] == 0) {
+            this.data[row][column] = value;
+            this.setItemBoard();
+            return true;
+        }
+        return false;
     }
 
 }

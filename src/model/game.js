@@ -21,7 +21,7 @@ class Game {
         document.addEventListener("mousedown", evt => {
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
-            console.log("click", x, y);
+            this.soloveMouseClick(x, y);
         })
 
         document.addEventListener("mousemove", evt => {
@@ -31,11 +31,18 @@ class Game {
         })
 
         document.addEventListener("mouseup", evt => {
-            if (win)
-                return;
             var x = evt.offsetX == undefined ? evt.layerX : evt.offsetX;
             var y = evt.offsetY == undefined ? evt.layerY : evt.offsetY;
         })
+    }
+
+    soloveMouseClick(x, y) {
+        const {row, column} = this.board.getColumnAndRowByPositon(x, y);
+        if (row > 0 && column > 0) {
+            if (this.board.setItem(row, column, 1)) {
+                console.log("Set ", row, column);
+            }
+        }
     }
 
 
