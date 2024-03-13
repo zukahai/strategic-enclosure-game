@@ -2,41 +2,67 @@ class Board {
     constructor(game) {
         this.game = game;
         this.numberBlock = 11;
-        this.init();
+        this.initBoardHexagon();
+        this.initData();
     }
 
-    init() {
+    initBoardHexagon() {
         this.sizeHexagon = this.getSizeHexagon();
         this.sizeHeightBlock = this.sizeHexagon * 2;
         this.xAlignment = (this.game.gameWidth - this.sizeHeightBlock * (Math.sqrt(3) / 2) * this.numberBlock) / 2;
         this.yAlignment = (this.game.gameHeight - 0.75 * this.sizeHeightBlock * this.numberBlock) / 2;
 
-        this.data = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
-        
-        
         this.hexagons = [];
         this.items = [];
-        
-        let height = 2 * this.sizeHexagon;
-        let width = Math.sqrt(3) * this.sizeHexagon;
 
         for (let i = 1; i <= this.numberBlock - 2; i++) {
             this.hexagons[i] = [];
             for (let j = 1; j <= this.numberBlock - 2; j++) {
-                let xAlignmentHexagon = this.xAlignment + j * width;
-                if (i % 2 == 0)
-                    xAlignmentHexagon += width / 2;
-                let yAlignmentHexagon = this.yAlignment + i * height - i * this.sizeHexagon / 2
-
+                const { width, height, xAlignmentHexagon, yAlignmentHexagon } = this.getPosition(i, j)
                 this.hexagons[i][j] = new Hexagon(this.game, width, height, xAlignmentHexagon, yAlignmentHexagon);
             }
         }
-        this.items[0] = new Ufo(this.game, width, height, this.hexagons[5][4].xAlignment, this.hexagons[5][4].yAlignment);
-        this.items[1] = new Barrier(this.game, width, height, this.hexagons[6][4].xAlignment, this.hexagons[6][4].yAlignment);
-        this.items[2] = new Barrier(this.game, width, height, this.hexagons[6][7].xAlignment, this.hexagons[6][7].yAlignment);
-        this.items[3] = new Barrier(this.game, width, height, this.hexagons[1][2].xAlignment, this.hexagons[1][2].yAlignment);
-        this.items[4] = new Barrier(this.game, width, height, this.hexagons[3][3].xAlignment, this.hexagons[3][3].yAlignment);
+    }
 
+    getPosition(i, j) {
+        let height = 2 * this.sizeHexagon;
+        let width = Math.sqrt(3) * this.sizeHexagon;
+
+        let xAlignmentHexagon = this.xAlignment + j * width;
+        if (i % 2 == 0)
+            xAlignmentHexagon += width / 2;
+        let yAlignmentHexagon = this.yAlignment + i * height - i * this.sizeHexagon / 2
+        return { width, height, xAlignmentHexagon, yAlignmentHexagon };
+    }
+
+    initData() {
+        this.data = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
+        this.items = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
+
+        this.data[1][2] = 1;
+        this.data[2][7] = 1;
+        this.data[3][7] = 1;
+        this.data[4][7] = 1;
+        this.data[4][5] = 2;
+
+        this.setItemBoard();
+    }
+
+    setItemBoard() {
+        for (let i = 1; i < this.numberBlock - 1; i++)
+            for (let j = 1; j < this.numberBlock - 1; j++) {
+                const { width, height, xAlignmentHexagon, yAlignmentHexagon } = this.getPosition(i, j)
+                switch (this.data[i][j]) {
+                    case 1:
+                        this.items[i][j] = new Barrier(this.game, width, height, xAlignmentHexagon, yAlignmentHexagon);
+                        break;
+                    case 2:
+                        this.items[i][j] = new Ufo(this.game, width, height, xAlignmentHexagon, yAlignmentHexagon);
+                        break;
+                    default:
+                        this.items[i][j] = 0;
+                }
+            }
     }
 
     draw() {
@@ -46,8 +72,10 @@ class Board {
             }
         }
 
-        for (let i = 0; i < this.items.length; i++)
-            this.items[i].draw();
+        for (let i = 1; i < this.numberBlock - 1; i++)
+            for (let j = 1; j < this.numberBlock - 1; j++)
+                if (this.items[i][j] != 0)
+                    this.items[i][j].draw();
     }
 
     getSizeHexagon() {
@@ -55,7 +83,6 @@ class Board {
         let gameHeight = this.game.gameHeight;
         let sizeHexagonByWidth = gameWidth / (2 * this.numberBlock);
         let sizeHexagonByHeight = gameHeight / (2 * 0.75 * this.numberBlock);
-        console.log(sizeHexagonByHeight, sizeHexagonByWidth);
         return Math.min(sizeHexagonByHeight, sizeHexagonByWidth);
     }
 
