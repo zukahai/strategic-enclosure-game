@@ -43,8 +43,11 @@ class Game {
             if (this.board.setItem(row, column, 1)) {
                 console.log("Set ", row, column);
                 // this.board.moveUfo(row + 1, column + 1);
-                console.table(this.board.data);
-                new AlogorithmDFS(this.board.data, this.board.postionUfo);
+                // console.table(this.board.data);
+                const algorithm = new AlogorithmDFS(this.board.data, this.board.postionUfo);
+                const step = algorithm.getNextStepUfo();
+                console.log("Step ", step);
+                this.board.moveUfo(step.row, step.column);
             }
         }
     }

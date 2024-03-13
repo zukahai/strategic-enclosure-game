@@ -59,7 +59,7 @@ class Board {
         this.data[0] = new Array(this.numberBlock).fill(5);
         this.data[this.numberBlock - 1] = new Array(this.numberBlock).fill(5);
         this.data = this.data.map((row) => {
-            row[0] = row[this.numberBlock] = 5;
+            row[0] = row[this.numberBlock - 1] = 5;
             return row;
         })
         this.items = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
@@ -126,6 +126,11 @@ class Board {
     }
 
     moveUfo(newRow, newColumn) {
+        if (newRow == -1){
+            alert("Bạn thắng!");
+            location.reload();
+        }
+
         // Lấy hàng, cột cũ của ufo
         const {row, column} = this.postionUfo;
         // Xoá ufo ở tạo đổi cũ
@@ -137,9 +142,12 @@ class Board {
 
         // Làm mới giao diện
         this.setItemBoard();
-        console.log(this.postionUfo);
 
         //===> Chỉ cần thay đổi ở mảng data, mảng item sẽ dùng hàm thay đổi sau
+        if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 ||  newColumn == this.data.length - 1) {
+            alert("UFO đã trốn thoát");
+            location.reload();
+        }
     }
 
 }
