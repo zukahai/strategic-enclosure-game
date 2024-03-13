@@ -56,6 +56,12 @@ class Board {
 
     initData() {
         this.data = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
+        this.data[0] = new Array(this.numberBlock).fill(5);
+        this.data[this.numberBlock - 1] = new Array(this.numberBlock).fill(5);
+        this.data = this.data.map((row) => {
+            row[0] = row[this.numberBlock] = 5;
+            return row;
+        })
         this.items = new Array(this.numberBlock).fill(0).map(() => new Array(this.numberBlock).fill(0));
 
         this.data[1][2] = 1;

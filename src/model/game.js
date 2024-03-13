@@ -43,6 +43,7 @@ class Game {
             if (this.board.setItem(row, column, 1)) {
                 console.log("Set ", row, column);
                 this.board.moveUfo(row + 1, column + 1);
+                console.table(this.board.data);
             }
         }
     }
