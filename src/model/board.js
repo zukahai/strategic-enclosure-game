@@ -78,6 +78,10 @@ class Board {
                         break;
                     case 2:
                         this.items[i][j] = new Ufo(this.game, width, height, xAlignmentHexagon, yAlignmentHexagon);
+                        this.postionUfo = {
+                            row: i,
+                            column: j,
+                        }
                         break;
                     default:
                         this.items[i][j] = 0;
@@ -113,6 +117,23 @@ class Board {
             return true;
         }
         return false;
+    }
+
+    moveUfo(newRow, newColumn) {
+        // Lấy hàng, cột cũ của ufo
+        const {row, column} = this.postionUfo;
+        // Xoá ufo ở tạo đổi cũ
+        this.data[row][column] = 0;
+        // Cập nhật tạo độ mới
+
+        this.postionUfo = {row: newRow, column: newColumn};
+        this.data[newRow][newColumn] = 2;
+
+        // Làm mới giao diện
+        this.setItemBoard();
+        console.log(this.postionUfo);
+
+        //===> Chỉ cần thay đổi ở mảng data, mảng item sẽ dùng hàm thay đổi sau
     }
 
 }

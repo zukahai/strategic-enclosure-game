@@ -11,9 +11,10 @@ class Game {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
         document.body.appendChild(this.canvas);
+        this.fps = new FPS();
         this.render();
         this.board = new Board(this);
-        this.loop();
+        this.start();
     }
 
 
@@ -37,19 +38,25 @@ class Game {
     }
 
     soloveMouseClick(x, y) {
-        const {row, column} = this.board.getColumnAndRowByPositon(x, y);
+        const { row, column } = this.board.getColumnAndRowByPositon(x, y);
         if (row > 0 && column > 0) {
             if (this.board.setItem(row, column, 1)) {
                 console.log("Set ", row, column);
+                this.board.moveUfo(row + 1, column + 1);
             }
         }
     }
 
 
-    loop() {
+    loop(timestamp) {
+        this.fps.calculateFPS(timestamp);
         this.update();
         this.draw();
-        setTimeout(() => this.loop(), 30);
+        requestAnimationFrame((timestamp) => this.loop(timestamp));
+    }
+
+    start() {
+        requestAnimationFrame((timestamp) => this.loop(timestamp));
     }
 
     update() {
@@ -69,6 +76,16 @@ class Game {
     draw() {
         this.clearScreen();
         this.board.draw();
+        this.drawFPS();
+    }
+
+    drawFPS() {
+        this.context.font = (this.board.sizeHexagon / 1.5) + 'px MyCustomFont';
+        this.context.fillStyle = "white";
+        let fps = this.fps.getFPS();
+        if (fps < 30)
+            this.context.fillStyle = "red";
+        this.context.fillText("FPS: " + fps, this.gameWidth * 0.9 - this.board.sizeHexagon, this.board.sizeHexagon);
     }
 
 
