@@ -15,12 +15,14 @@ class Board {
         
         
         this.hexagons = [];
+        this.items = [];
         
+        let height = 2 * this.sizeHexagon;
+        let width = Math.sqrt(3) * this.sizeHexagon;
+
         for (let i = 1; i <= this.numberBlock - 2; i++) {
             this.hexagons[i] = [];
             for (let j = 1; j <= this.numberBlock - 2; j++) {
-                let height = 2 * this.sizeHexagon;
-                let width = Math.sqrt(3) * this.sizeHexagon;
                 let xAlignmentHexagon = this.xAlignment + j * width;
                 if (i % 2 == 0)
                     xAlignmentHexagon += width / 2;
@@ -29,6 +31,11 @@ class Board {
                 this.hexagons[i][j] = new Hexagon(this.game, width, height, xAlignmentHexagon, yAlignmentHexagon);
             }
         }
+        this.items[0] = new Ufo(this.game, width, height, this.hexagons[5][4].xAlignment, this.hexagons[5][4].yAlignment);
+        this.items[1] = new Barrier(this.game, width, height, this.hexagons[6][4].xAlignment, this.hexagons[6][4].yAlignment);
+        this.items[2] = new Barrier(this.game, width, height, this.hexagons[6][7].xAlignment, this.hexagons[6][7].yAlignment);
+        this.items[3] = new Barrier(this.game, width, height, this.hexagons[1][2].xAlignment, this.hexagons[1][2].yAlignment);
+        this.items[4] = new Barrier(this.game, width, height, this.hexagons[3][3].xAlignment, this.hexagons[3][3].yAlignment);
 
     }
 
@@ -38,6 +45,9 @@ class Board {
                 this.hexagons[i][j].draw();
             }
         }
+
+        for (let i = 0; i < this.items.length; i++)
+            this.items[i].draw();
     }
 
     getSizeHexagon() {
