@@ -3,7 +3,7 @@ class Board {
         this.game = game;
         this.numberBlock = 11;
         this.levels = new Level().levels;
-        this.level = 5;
+        this.level = 0;
         this.initVariable();
         this.initData();
     }
