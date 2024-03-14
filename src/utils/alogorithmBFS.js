@@ -8,28 +8,29 @@ class AlogorithmBFS {
         this.queue.enqueue({row: start.row, column: start.column});
         this.arr[start.row][start.column] = 0;
         this.process[start.row][start.column] = [{row: start.row, column: start.column}];
-        this.bfs();
+        this.breadthFirstSearch();
     }
 
-    bfs() {
+    breadthFirstSearch() {
         while(!this.queue.isEmpty()) {
             let temp = this.queue.peek();
             this.queue.dequeue();
             const adjacent = this.adjacent(temp.row, temp.column);
             adjacent.forEach((e) => {
-                if (this.data[e.row][e.column] == 0 && this.arr[e.row][e.column] == 99) {
-                    this.queue.enqueue(temp);
-                    this.arr[e.row][e.column] = this.arr[temp.row][temp.column] + 1;
-                    this.process[e.row][e.column] = [...this.process[temp.row][temp.column], {row: e.row, column: e.column}]
-                    this.queue.enqueue({row: e.row, column: e.column});
-                }
-                if (this.data[e.row][e.column] == 5) {
-                    this.arr[e.row][e.column] = this.arr[temp.row][temp.column] + 1;
-                    this.process[e.row][e.column] = [...this.process[temp.row][temp.column], {row: e.row, column: e.column}]
+                if (this.arr[e.row][e.column] == 99) {
+                    if (this.data[e.row][e.column] == 0) {
+                        this.arr[e.row][e.column] = this.arr[temp.row][temp.column] + 1;
+                        this.process[e.row][e.column] = [...this.process[temp.row][temp.column], {row: e.row, column: e.column}]
+                        this.queue.enqueue({row: e.row, column: e.column});
+                    }
+                    if (this.data[e.row][e.column] == 5) {
+                        this.arr[e.row][e.column] = this.arr[temp.row][temp.column] + 1;
+                        this.process[e.row][e.column] = [...this.process[temp.row][temp.column], {row: e.row, column: e.column}]
+                    }
                 }
             })
         }
-        console.table(this.arr);
+        // console.table(this.arr);
         // console.log(this.getNextStepUfo());
     }
 
@@ -49,7 +50,7 @@ class AlogorithmBFS {
                 min = {row: this.arr.length - 1, column: i};
             }
         }
-        console.log(this.arr[min.row][min.column]);
+        // console.log(this.arr[min.row][min.column]);
         let arrMin = [];
         for (let i = 0; i < this.arr.length; i++) {
             if (this.arr[i][0] == this.arr[min.row][min.column]) {
@@ -69,7 +70,9 @@ class AlogorithmBFS {
         if (this.arr[min.row][min.column] == 99)
             return {row: -1, column: -1};
         
+        // console.table(this.arr);
         let randomMove = arrMin[Math.floor(10000* Math.random()) % arrMin.length];
+        // console.table(this.process[randomMove.row][randomMove.column]);
         return this.process[randomMove.row][randomMove.column][1];
     }
 

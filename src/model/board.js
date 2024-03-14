@@ -3,7 +3,7 @@ class Board {
         this.game = game;
         this.numberBlock = 11;
         this.levels = new Level().levels;
-        this.level = 0;
+        this.level = 5;
         this.initVariable();
         this.initData();
     }
@@ -90,7 +90,7 @@ class Board {
 
     initData() {
         this.setLevel(this.level);
-        console.log("Done init");
+        // console.log("Done init");
     }
 
     setItemBoard() {
@@ -166,7 +166,7 @@ class Board {
                 alert("Bạn thắng!");
                 this.setLevel(++this.level)
                 return;
-            }, 500);
+            }, 200);
         }
 
         // Lấy hàng, cột cũ của ufo
@@ -185,8 +185,8 @@ class Board {
         if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 ||  newColumn == this.data.length - 1) {
             setTimeout(() => {
                 alert("UFO đã trốn thoát");
-                this.reset();
-            }, 500);
+                this.resetCurrentLevel();
+            }, 200);
         }
     }
 
