@@ -123,8 +123,8 @@ class Game {
 
     clearScreen() {
         this.context.clearRect(0, 0, this.gameWidth, this.gameHeight);
-        // this.context.fillStyle = '#000000';
-        // this.context.fillRect(0, 0, this.gameWidth, this.gameHeight);
+        this.context.fillStyle = '#000000';
+        this.context.fillRect(0, 0, this.gameWidth, this.gameHeight);
     }
 }
 

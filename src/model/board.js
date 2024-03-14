@@ -115,11 +115,11 @@ class Board {
     }
 
     draw() {
-        // for (let i = 1; i <= this.numberBlock - 2; i++) {
-        //     for (let j = 1; j <= this.numberBlock - 2; j++) {
-        //         this.hexagons[i][j].draw();
-        //     }
-        // }
+        for (let i = 1; i <= this.numberBlock - 2; i++) {
+            for (let j = 1; j <= this.numberBlock - 2; j++) {
+                this.hexagons[i][j].draw();
+            }
+        }
 
         for (let i = 1; i < this.numberBlock - 1; i++)
             for (let j = 1; j < this.numberBlock - 1; j++)
@@ -146,9 +146,11 @@ class Board {
 
     moveUfo(newRow, newColumn) {
         if (newRow == -1){
-            alert("Bạn thắng!");
-            this.setLevel(++this.level)
-            return;
+            setTimeout(() => {
+                alert("Bạn thắng!");
+                this.setLevel(++this.level)
+                return;
+            }, 500);
         }
 
         // Lấy hàng, cột cũ của ufo
@@ -165,8 +167,10 @@ class Board {
 
         //===> Chỉ cần thay đổi ở mảng data, mảng item sẽ dùng hàm thay đổi sau
         if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 ||  newColumn == this.data.length - 1) {
-            alert("UFO đã trốn thoát");
-            this.setLevel(this.level);
+            setTimeout(() => {
+                alert("UFO đã trốn thoát");
+                this.setLevel(this.level);
+            }, 500);
         }
     }
 
