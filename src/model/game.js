@@ -14,8 +14,8 @@ class Game {
         this.fps = new FPS();
         this.render();
         this.board = new Board(this);
-        // this.start();
-        this.loop();
+        this.start();
+        // this.loop();
     }
 
 
@@ -45,7 +45,7 @@ class Game {
                 console.log("Set ", row, column);
                 // this.board.moveUfo(row + 1, column + 1);
                 // console.table(this.board.data);
-                const algorithm = new AlogorithmDFS(this.board.data, this.board.postionUfo);
+                const algorithm = new AlogorithmBFS(this.board.data, this.board.postionUfo);
                 const step = algorithm.getNextStepUfo();
                 console.log("Step ", step);
                 this.board.moveUfo(step.row, step.column);
@@ -54,21 +54,21 @@ class Game {
     }
 
 
-    // loop(timestamp) {
-    //     this.fps.calculateFPS(timestamp);
-    //     this.update();
-    //     this.draw();
-    //     requestAnimationFrame((timestamp) => this.loop(timestamp));
-    // }
-
-    loop() {
-        // this.fps.calculateFPS(timestamp);
+    loop(timestamp) {
+        this.fps.calculateFPS(timestamp);
         this.update();
         this.draw();
-        setTimeout(() => {
-            this.loop();
-        }, 30);
+        requestAnimationFrame((timestamp) => this.loop(timestamp));
     }
+
+    // loop() {
+    //     // this.fps.calculateFPS(timestamp);
+    //     this.update();
+    //     this.draw();
+    //     setTimeout(() => {
+    //         this.loop();
+    //     }, 30);
+    // }
 
     start() {
         requestAnimationFrame((timestamp) => this.loop(timestamp));
@@ -91,7 +91,7 @@ class Game {
         this.clearScreen();
         this.board.draw();
         this.drawLevel();
-        // this.drawFPS();
+        this.drawFPS();
     }
 
     drawFPS() {
@@ -123,8 +123,8 @@ class Game {
 
     clearScreen() {
         this.context.clearRect(0, 0, this.gameWidth, this.gameHeight);
-        this.context.fillStyle = '#000000';
-        this.context.fillRect(0, 0, this.gameWidth, this.gameHeight);
+        // this.context.fillStyle = '#000000';
+        // this.context.fillRect(0, 0, this.gameWidth, this.gameHeight);
     }
 }
 

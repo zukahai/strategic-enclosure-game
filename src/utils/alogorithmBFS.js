@@ -1,4 +1,4 @@
-class AlogorithmDFS {
+class AlogorithmBFS {
     constructor(data, start) {
         this.data = data;
         this.start = start;
@@ -8,10 +8,10 @@ class AlogorithmDFS {
         this.queue.enqueue({row: start.row, column: start.column});
         this.arr[start.row][start.column] = 0;
         this.process[start.row][start.column] = [{row: start.row, column: start.column}];
-        this.dfs();
+        this.bfs();
     }
 
-    dfs() {
+    bfs() {
         while(!this.queue.isEmpty()) {
             let temp = this.queue.peek();
             this.queue.dequeue();

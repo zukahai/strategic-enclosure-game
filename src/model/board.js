@@ -115,11 +115,11 @@ class Board {
     }
 
     draw() {
-        for (let i = 1; i <= this.numberBlock - 2; i++) {
-            for (let j = 1; j <= this.numberBlock - 2; j++) {
-                this.hexagons[i][j].draw();
-            }
-        }
+        // for (let i = 1; i <= this.numberBlock - 2; i++) {
+        //     for (let j = 1; j <= this.numberBlock - 2; j++) {
+        //         this.hexagons[i][j].draw();
+        //     }
+        // }
 
         for (let i = 1; i < this.numberBlock - 1; i++)
             for (let j = 1; j < this.numberBlock - 1; j++)
