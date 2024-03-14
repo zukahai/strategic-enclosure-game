@@ -4,6 +4,7 @@ class Game {
         this.context = null;
         this.init();
         this.listenMouse();
+        this.listenKey();
     }
 
     init() {
@@ -18,6 +19,19 @@ class Game {
         // this.loop();
     }
 
+    listenKey() {
+        document.addEventListener("keydown", evt => {
+            if (evt.key === 'r') {
+                this.board.resetCurrentLevel();
+            }
+            if (evt.key == 'n') {
+                this.board.nextLevel();
+            }
+            if (evt.key == 'p') {
+                this.board.preLevel();
+            }
+        });
+    }
 
     listenMouse() {
         document.addEventListener("mousedown", evt => {
@@ -106,7 +120,7 @@ class Game {
     drawLevel() {
         this.context.font = (this.board.sizeHexagon / 1.5) + 'px MyCustomFont';
         this.context.fillStyle = "white";
-        this.context.fillText("Level: " + (this.board.level + 1), this.board.sizeHexagon , this.board.sizeHexagon);
+        this.context.fillText("Level: " + (this.board.level + 1), this.board.sizeHexagon, this.board.sizeHexagon);
     }
 
 

@@ -144,6 +144,22 @@ class Board {
         return false;
     }
 
+    resetCurrentLevel() {
+        this.setLevel(this.level);
+    }
+
+    nextLevel() {
+        if (++this.level >= this.levels.length)
+            --this.level;
+        this.setLevel(this.level);
+    }
+
+    preLevel() {
+        if (--this.level < 0)
+            ++this.level;
+        this.setLevel(this.level);
+    }
+
     moveUfo(newRow, newColumn) {
         if (newRow == -1){
             setTimeout(() => {
@@ -169,7 +185,7 @@ class Board {
         if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 ||  newColumn == this.data.length - 1) {
             setTimeout(() => {
                 alert("UFO đã trốn thoát");
-                this.setLevel(this.level);
+                this.reset();
             }, 500);
         }
     }
