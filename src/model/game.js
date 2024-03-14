@@ -15,8 +15,8 @@ class Game {
         this.fps = new FPS();
         this.render();
         this.board = new Board(this);
-        this.start();
-        // this.loop();
+        // this.start();
+        this.loop();
     }
 
     listenKey() {
@@ -56,33 +56,29 @@ class Game {
         const { row, column } = this.board.getColumnAndRowByPositon(x, y);
         if (row > 0 && column > 0) {
             if (this.board.setItem(row, column, 1)) {
-                // console.log("Set ", row, column);
-                // this.board.moveUfo(row + 1, column + 1);
-                // console.table(this.board.data);
                 const algorithm = new AlogorithmBFS(this.board.data, this.board.postionUfo);
                 const step = algorithm.getNextStepUfo();
-                // console.log("Step ", step);
                 this.board.moveUfo(step.row, step.column);
             }
         }
     }
 
 
-    loop(timestamp) {
-        this.fps.calculateFPS(timestamp);
-        this.update();
-        this.draw();
-        requestAnimationFrame((timestamp) => this.loop(timestamp));
-    }
-
-    // loop() {
-    //     // this.fps.calculateFPS(timestamp);
+    // loop(timestamp) {
+    //     this.fps.calculateFPS(timestamp);
     //     this.update();
     //     this.draw();
-    //     setTimeout(() => {
-    //         this.loop();
-    //     }, 30);
+    //     requestAnimationFrame((timestamp) => this.loop(timestamp));
     // }
+
+    loop() {
+        // this.fps.calculateFPS(timestamp);
+        // this.update();
+        this.draw();
+        setTimeout(() => {
+            this.loop();
+        }, 30);
+    }
 
     start() {
         requestAnimationFrame((timestamp) => this.loop(timestamp));

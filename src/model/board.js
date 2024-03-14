@@ -120,7 +120,6 @@ class Board {
                 this.hexagons[i][j].draw();
             }
         }
-
         for (let i = 1; i < this.numberBlock - 1; i++)
             for (let j = 1; j < this.numberBlock - 1; j++)
                 if (this.items[i][j] != 0)
