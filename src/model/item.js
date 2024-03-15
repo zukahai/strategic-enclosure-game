@@ -5,14 +5,19 @@ class Item {
         this.xAlignment = xAlignment;
         this.yAlignment = yAlignment;
         this.game = game;
+        this.setImage();
     }
 
     draw() {
-        this.game.context.drawImage(this.getImage(), this.xAlignment, this.yAlignment, this.width, this.height);
+        this.game.context.drawImage(this.image, this.xAlignment, this.yAlignment, this.width, this.height);
     }
 
     getImage() {
-        return new Image();
+        this.image();
+    }
+
+    setImage() {
+        this.image = new Image();
     }
 
 }

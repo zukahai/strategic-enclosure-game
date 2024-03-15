@@ -164,8 +164,8 @@ class Board {
             setTimeout(() => {
                 alert("Bạn thắng!");
                 this.setLevel(++this.level)
-                return;
             }, 200);
+            return;
         }
 
         // Lấy hàng, cột cũ của ufo

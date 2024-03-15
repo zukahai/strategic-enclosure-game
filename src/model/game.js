@@ -15,8 +15,8 @@ class Game {
         this.fps = new FPS();
         this.render();
         this.board = new Board(this);
-        // this.start();
-        this.loop();
+        this.start();
+        // this.loop();
     }
 
     listenKey() {
@@ -64,21 +64,21 @@ class Game {
     }
 
 
-    // loop(timestamp) {
-    //     this.fps.calculateFPS(timestamp);
-    //     this.update();
-    //     this.draw();
-    //     requestAnimationFrame((timestamp) => this.loop(timestamp));
-    // }
-
-    loop() {
-        // this.fps.calculateFPS(timestamp);
-        // this.update();
+    loop(timestamp) {
+        this.fps.calculateFPS(timestamp);
+        this.update();
         this.draw();
-        setTimeout(() => {
-            this.loop();
-        }, 30);
+        requestAnimationFrame((timestamp) => this.loop(timestamp));
     }
+
+    // loop() {
+    //     // this.fps.calculateFPS(timestamp);
+    //     // this.update();
+    //     this.draw();
+    //     setTimeout(() => {
+    //         this.loop();
+    //     }, 30);
+    // }
 
     start() {
         requestAnimationFrame((timestamp) => this.loop(timestamp));
@@ -99,6 +99,7 @@ class Game {
 
     draw() {
         this.clearScreen();
+        this.board.draw();
         this.board.draw();
         this.drawLevel();
         this.drawFPS();
@@ -133,7 +134,7 @@ class Game {
 
     clearScreen() {
         this.context.clearRect(0, 0, this.gameWidth, this.gameHeight);
-        this.context.fillStyle = '#000000';
+        this.context.fillStyle = '#302300';
         this.context.fillRect(0, 0, this.gameWidth, this.gameHeight);
     }
 }

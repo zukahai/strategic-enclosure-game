@@ -3,9 +3,8 @@ class Hexagon extends Item {
         super(game, width, height, xAlignment, yAlignment);
     }
 
-    getImage() {
-        let hexagonImage = new Image();
-        hexagonImage.src = "assets/images/hexagon.png";
-        return hexagonImage;
+    setImage() {
+        this.image = new Image();
+        this.image.src = "assets/images/hexagon.png";
     }
 }
