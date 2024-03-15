@@ -63,7 +63,7 @@ class Board {
         for (let i = 0; i < this.data.length; i++)
             for (let j = 0; j < this.data.length; j++)
                 if (this.data[i][j] == 2) {
-                    this.postionUfo = {row: i, column: j};
+                    this.postionUfo = { row: i, column: j };
                     break;
                 }
         this.setItemBoard();
@@ -160,7 +160,7 @@ class Board {
     }
 
     moveUfo(newRow, newColumn) {
-        if (newRow == -1){
+        if (newRow == -1) {
             setTimeout(() => {
                 alert("Bạn thắng!");
                 this.setLevel(++this.level)
@@ -169,23 +169,40 @@ class Board {
         }
 
         // Lấy hàng, cột cũ của ufo
-        const {row, column} = this.postionUfo;
+        const { row, column } = this.postionUfo;
         // Xoá ufo ở tạo đổi cũ
         this.data[row][column] = 0;
         // Cập nhật tạo độ mới
 
-        this.postionUfo = {row: newRow, column: newColumn};
+        this.postionUfo = { row: newRow, column: newColumn };
         this.data[newRow][newColumn] = 2;
 
+        let index = 1;
+        const oldX = this.items[row][column].xAlignment;
+        const oldY = this.items[row][column].yAlignment;
+
+        const numberStep = 20;
+        const { width, height, xAlignmentHexagon, yAlignmentHexagon } = this.getPosition(newRow, newColumn)
+        const intervalId = setInterval(() => {
+            this.draw();
+            
+            this.items[row][column].xAlignment += ((xAlignmentHexagon - oldX) / numberStep);
+            this.items[row][column].yAlignment += ((yAlignmentHexagon - oldY) / numberStep);
+            index++;
+            if (index > numberStep) {
+                clearInterval(intervalId);
+                this.setItemBoard();
+            }
+        }, 200 / numberStep);
+
         // Làm mới giao diện
-        this.setItemBoard();
 
         //===> Chỉ cần thay đổi ở mảng data, mảng item sẽ dùng hàm thay đổi sau
-        if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 ||  newColumn == this.data.length - 1) {
+        if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 || newColumn == this.data.length - 1) {
             setTimeout(() => {
                 alert("UFO đã trốn thoát");
                 this.resetCurrentLevel();
-            }, 200);
+            }, 500);
         }
     }
 
