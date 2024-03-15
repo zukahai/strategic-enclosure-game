@@ -106,7 +106,7 @@ class Game {
     }
 
     drawFPS() {
-        this.context.font = (this.board.sizeHexagon / 1.5) + 'px MyCustomFont';
+        this.context.font = (this.board.sizeHexagon / 1.5) + 'px NVNPixelFJVerdana8pt';
         this.context.fillStyle = "white";
         let fps = this.fps.getFPS();
         if (fps < 30)
@@ -115,7 +115,7 @@ class Game {
     }
 
     drawLevel() {
-        this.context.font = (this.board.sizeHexagon / 1.5) + 'px MyCustomFont';
+        this.context.font = (this.board.sizeHexagon / 1.5) + 'px NVNPixelFJVerdana8pt';
         this.context.fillStyle = "white";
         this.context.fillText("Level: " + (this.board.level + 1), this.board.sizeHexagon, this.board.sizeHexagon);
     }
