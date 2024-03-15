@@ -162,7 +162,7 @@ class Board {
     moveUfo(newRow, newColumn) {
         if (newRow == -1) {
             setTimeout(() => {
-                alert("Bạn thắng!");
+                alert("Dứa + 1 top 1, Dứa con + 1 ngạo nghễ!");
                 this.setLevel(++this.level)
             }, 200);
             return;
@@ -200,7 +200,7 @@ class Board {
         //===> Chỉ cần thay đổi ở mảng data, mảng item sẽ dùng hàm thay đổi sau
         if (newRow == 0 || newColumn == 0 || newRow == this.data.length - 1 || newColumn == this.data.length - 1) {
             setTimeout(() => {
-                alert("UFO đã trốn thoát");
+                alert("TOP 1 đã xa tầm với");
                 this.resetCurrentLevel();
             }, 500);
         }
