@@ -162,7 +162,7 @@ class Board {
     moveUfo(newRow, newColumn) {
         if (newRow == -1) {
             setTimeout(() => {
-                alert("Bạn thắng!");
+                alert("Bạn đã hoàn thành màn chơi thứ " + (this.level + 1));
                 this.setLevel(++this.level)
             }, 200);
             return;
