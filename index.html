@@ -6,10 +6,28 @@
     <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico">
     <title>Strategic Enclosure game | HaiZuka</title>
     <link rel="stylesheet" href="./src/css/style.css">
+    <link rel="stylesheet" href="./src/css/modal.css">
 </head>
 <body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1> Vây bắt chiến thuật</h1>
+            <img src="./assets/images/ufo.png" alt="" srcset="">
+            <h2>Luật chơi</h2>
+          <p>
+            Nhiệm vụ của bạn là ngăn chặn UFO đang âm mưu tiếp cận Trái Đất với những ý đồ không tốt. Để làm điều này, bạn cần tạo ra một mạng lưới vật cản để ngăn UFO trốn thoát khỏi ma trận lục giác.<br>
+            UFO có thể di chuyển qua những ô lục giác trống và kề cạnh với ô mà nó đang đứng. Bạn có quyền đặt vô số vật cản để tạo ra các chướng ngại vật. Mỗi lượt, bạn được phép đặt một vật cản vào một ô lục giác trống.<br>
+            Hãy sử dụng chiến thuật của bạn để vây bắt UFO và ngăn chặn kế hoạch xấu xa của chúng!"
+          </p>
+
+        </div>
+      </div>
+
+      <script src="./src/utils/modal.js"></script>
+
     <script src="./src/utils/utils.js"></script>
-    <script src="./src/utils/devtools.js"></script>
+    <!-- <script src="./src/utils/devtools.js"></script> -->
     <script src="./src/model/item.js"></script>
     <script src="./src/model/hexagon.js"></script>
     <script src="./src/model/ufo.js"></script>
