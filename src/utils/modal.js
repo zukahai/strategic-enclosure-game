@@ -4,7 +4,7 @@ var modal = document.getElementById("myModal");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-
+var input_close = document.getElementById("input-close");
 // When the page loads, show the modal
 window.onload = function () {
     modal.style.display = "block";
@@ -15,6 +15,11 @@ window.onload = function () {
 span.onclick = function () {
     modal.style.display = "none";
 }
+
+input_close.onclick = function () {
+    modal.style.display = "none";
+}
+
 
 
 // When the user clicks anywhere outside of the modal, close it
