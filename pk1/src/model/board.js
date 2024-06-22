@@ -162,7 +162,7 @@ class Board {
     moveUfo(newRow, newColumn) {
         if (newRow == -1) {
             setTimeout(() => {
-                alert("Dứa + 1 top 1, Dứa con + 1 ngạo nghễ!");
+                alert("Pinky +1 top 1, Chuồng heo +1 ngạo nghễ!");
                 this.setLevel(++this.level)
             }, 200);
             return;
